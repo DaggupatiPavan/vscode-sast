@@ -1,0 +1,111 @@
+{
+  "name": "ai-sast-code-generator",
+  "displayName": "AI SAST Code Generator",
+  "description": "Generate code with Groq AI and automatically detect/fix security vulnerabilities",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Snippets",
+    "Machine Learning"
+  ],
+  "activationEvents": [
+    "onCommand:ai-sast.generateCode"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ai-sast.generateCode",
+        "title": "Generate Code with AI (SAST Protected)",
+        "category": "AI SAST"
+      },
+      {
+        "command": "ai-sast.scanAndFix",
+        "title": "Scan and Fix Vulnerabilities",
+        "category": "AI SAST"
+      },
+      {
+        "command": "ai-sast.configure",
+        "title": "Configure Groq API",
+        "category": "AI SAST"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "ai-sast.generateCode",
+        "key": "ctrl+shift+g",
+        "mac": "cmd+shift+g"
+      },
+      {
+        "command": "ai-sast.scanAndFix",
+        "key": "ctrl+shift+f",
+        "mac": "cmd+shift+f"
+      }
+    ],
+    "configuration": {
+      "title": "AI SAST Code Generator",
+      "properties": {
+        "aiSast.groqApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your Groq API key for code generation",
+          "scope": "application"
+        },
+        "aiSast.autoScan": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scan AI-generated code for vulnerabilities",
+          "scope": "application"
+        },
+        "aiSast.autoFix": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically fix detected vulnerabilities",
+          "scope": "application"
+        },
+        "aiSast.scanDelay": {
+          "type": "number",
+          "default": 2000,
+          "description": "Delay in milliseconds before scanning after code generation",
+          "scope": "application"
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "ai-sast.generateCode",
+          "group": "ai-sast",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "ai-sast.scanAndFix",
+          "group": "ai-sast",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
